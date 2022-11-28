@@ -27,15 +27,11 @@ Selaras dengan semangat G20, kami yakin, kehadiran aplikasi ini dapat membantu m
 
 [Sumber 1](https://www.g20.org/about-the-g20/) | [Sumber 2](https://diskominfotik.lampungprov.go.id/detail-post/apa-saja-isu-yang-dibahas-dalam-g20) | [Sumber 3](https://ourworldindata.org/mental-health) | [Sumber 4](https://unkartur.ac.id/blog/2022/01/04/membangun-mental-health-awareness-untuk-mencapai-generasi-emas-indonesia-2045/)
 
-
-
 ### Nama aplikasi : loveiscaring
 
 ### Fungsi aplikasi : 
 
 Kesehatan mental mencakup kesejahteraan emosional, psikologis, dan sosial kita. Hal itu mempengaruhi bagaimana cara kita berpikir, merasakan, dan bertindak. Beberapa bulan ke belakang ini, kesadaran masyarakat Indonesia terus meningkat. Meskipun sudah banyak dibicarakan, sayangnya kesehatan mental masih dianggap stigma bagi beberapa orang. Masih banyak yang beranggapan bahwa orang dengan masalah kesehatan mental adalah orang gila atau hal lain sebagainya, sehingga seseorang dengan gangguan mental pun enggan untuk pergi melakukan konsultasi. Oleh karena itu, kami sebagai mahasiswa yang sadar akan pentingnya mental health meluncurkan aplikasi ini. Aplikasi ini bertujuan untuk meningkatkan kesadaran akan kesehatan mental dan menyediakan wadah bagi orang yang ingin menceritakan keluh kesahnya. Di aplikasi ini, akan ada halaman yang berisikan informasi yang berkaitan dengan kesehatan mental. Selain itu, akan ada cards dimana seseorang bisa menceritakan dan menampilkan cerita tersebut kepada banyak orang.
-
-
 
 
 ### Peran/aktor pengguna aplikasi :
@@ -62,6 +58,9 @@ Kesehatan mental tersebut meliputi nama penyakit, deskripsi, gejala, statistik.
 - **Halaman About** 
 Halaman about akan berisi informasi pembuat aplikasi.
 
+- **Halaman Feedback** 
+Halaman Feedback akan berisi feedback mengenai penggunaan aplikasi.
+
 - **Card**
 Card adalah sebuah komponen yang berisikan:
     - Username
@@ -75,7 +74,6 @@ Card informasi adalah sebuah komponen yang berisikan:
     - Nama penyakit
     - Deskripsi singkat
     - Link untuk menuju halaman tersebut.
-    
     
 ## Alur pengintegrasian dengan web service 
 
