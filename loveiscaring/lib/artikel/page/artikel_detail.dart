@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:loveiscaring/artikel/model/artikel.dart';
 
+import '../widget/response_card.dart';
+
 class ArtikelDetail extends StatefulWidget {
-  const ArtikelDetail({super.key, required this.disorder});
-  final String disorder;
+  const ArtikelDetail(
+      {super.key, required this.disorder, required this.disorderName});
+  final String disorder, disorderName;
 
   @override
   State<ArtikelDetail> createState() => _ArtikelDetailState();
 }
 
 class _ArtikelDetailState extends State<ArtikelDetail> {
-  late Future<Artikel> artikel;
+  Future<Artikel>? artikel;
 
   @override
   void initState() {
@@ -24,67 +27,116 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
     const double smallHeight = 4;
 
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(widget.disorder),
+          title: Text(widget.disorder,
+              style: const TextStyle(color: Colors.black)),
+          backgroundColor: const Color(0xfff9f9f9),
+          elevation: 16.0,
+          iconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
         ),
-        body: FutureBuilder(
-            future: artikel,
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return Container(
-                  margin: const EdgeInsets.all(7.5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: largeHeight),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              snapshot.data!.title,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: smallHeight),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              snapshot.data!.subtitle,
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: largeHeight),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              snapshot.data!.deskripsi,
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          )
-                        ],
-                      ),
-                      // TODO lanjutin
-                    ],
-                  ),
-                );
-              }
-            }));
+        body: SingleChildScrollView(
+          child: FutureBuilder(
+              future: artikel,
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return SizedBox(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        const SizedBox(height: largeHeight),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                snapshot.data!.title,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 28, fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: smallHeight),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            snapshot.data!.subtitle,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        const SizedBox(height: largeHeight),
+                        Container(
+                          decoration:
+                              const BoxDecoration(color: Color(0xfffaf5f0)),
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                snapshot.data!.deskripsi,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w200),
+                              ),
+                              const SizedBox(height: largeHeight),
+                              const Text("Bagaimana cara mencegahnya?",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                snapshot.data!.subpencegah,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w200),
+                              ),
+                              const SizedBox(height: smallHeight),
+                              for (String tips in snapshot.data!.tips)
+                                Text("• $tips",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w200))
+                            ],
+                          ),
+                        ),
+                        const Text("Bagaimana Tanggapan Anda?",
+                            style: TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold)),
+                        // Offstage(
+                        //   offstage: (!isUser.logIn),
+                        //   child: ElevatedButton(
+                        //     child: Text("A"),
+                        //     onPressed: (){
+
+                        //     },
+                        //   )
+                        // ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 3,
+                          itemBuilder: ((context, index) {
+                            return ResponseCard(
+                              height: 225,
+                              width: 200,
+                              backgroundColor: Colors.white,
+                              shadowColor: Colors.black.withOpacity(0.4),
+                              responseText: "Ini dummy teks ke $index",
+                              //responseText: json.data[index].text,
+                            );
+                          }),
+                        ),
+                        // TODO lanjutin
+                      ],
+                    ),
+                  );
+                }
+              }),
+        ));
   }
 }

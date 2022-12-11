@@ -32,9 +32,9 @@ class _DaftarArtikelPageState extends State<DaftarArtikelPage> {
             itemCount: listed.length,
             itemBuilder: ((context, index) => GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            ArtikelDetail(disorder: listed[index])));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         ArtikelDetail(disorder: listed[index], disorderName: )));
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(
