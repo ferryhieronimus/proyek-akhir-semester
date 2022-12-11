@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loveiscaring/page/drawer.dart';
 
+import 'artikel/page/artikel_detail.dart';
+import 'artikel/widget/artikel_card.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,20 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'loveiscaring',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        fontFamily: 'Kanit',
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -48,18 +43,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> disorderList = [
+    "depression",
+    "schizophrenia",
+    "anxiety",
+    "eating",
+    "mood",
+    "ptsd"
+  ];
+  Map<String, String> disorderNameList = {
+    "depression": "Depression",
+    "schizophrenia": "Schizophrenia",
+    "anxiety": "Anxiety Disorder",
+    "eating": "Eating Disorder",
+    "mood": "Mood Disorder",
+    "ptsd": "PTSD",
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +70,40 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title, style: const TextStyle(color: Colors.black)),
+        leading: GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset("assets/images/logo.png", width: 3, height: 3),
+            ),
+            onTap: () {
+              if (scaffoldKey.currentState!.isDrawerOpen) {
+                scaffoldKey.currentState!.closeDrawer();
+                //close drawer, if drawer is open
+              } else {
+                scaffoldKey.currentState!.openDrawer();
+                //open drawer, if drawer is closed
+              }
+            }),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {},
+            ),
+          )
+        ],
+        backgroundColor: const Color(0xfff9f9f9),
+        elevation: 16.0,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
       ),
-      drawer: buildDrawer(context), // menambahkan drawer ke homepage
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -106,11 +134,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
