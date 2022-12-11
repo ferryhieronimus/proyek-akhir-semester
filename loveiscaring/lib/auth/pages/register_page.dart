@@ -34,11 +34,8 @@ class _MyRegisterState extends State<MyRegister> {
 
   onPressed(BuildContext context, request) async {
     final response = await request
-        .post("https://loveiscaring.up.railway.app/authentication/login/", {
+        .post("https://loveiscaring.up.railway.app/authentication/register-async/", {
       'username': username,
-      'password1': _password1,
-      'password2': _password2,
-      'role': role_map[_role],
     });
     if (response['status'] == true) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -63,11 +60,10 @@ class _MyRegisterState extends State<MyRegister> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('loveiscaring/assets/register.png'),
+                image: AssetImage('assets/images/register.png'),
                 fit: BoxFit.cover),
           ),
           child: Scaffold(
-            drawer: const Hamburger(),
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
@@ -231,6 +227,9 @@ class _MyRegisterState extends State<MyRegister> {
                                   }
                                   return null;
                                 },
+                              ),
+                              const SizedBox(
+                                height: 30,
                               ),TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -262,6 +261,8 @@ class _MyRegisterState extends State<MyRegister> {
                                   }
                                   return null;
                                 },
+                              ),const SizedBox(
+                                height: 30,
                               ),TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -293,6 +294,8 @@ class _MyRegisterState extends State<MyRegister> {
                                   }
                                   return null;
                                 },
+                              ),const SizedBox(
+                                height: 30,
                               ),TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -324,6 +327,8 @@ class _MyRegisterState extends State<MyRegister> {
                                   }
                                   return null;
                                 },
+                              ),const SizedBox(
+                                height: 30,
                               ),TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -358,6 +363,8 @@ class _MyRegisterState extends State<MyRegister> {
                                     }
                                   return null;
                                 },
+                              ),const SizedBox(
+                                height: 30,
                               ),
                               TextFormField(
                                 style: const TextStyle(color: Colors.white),

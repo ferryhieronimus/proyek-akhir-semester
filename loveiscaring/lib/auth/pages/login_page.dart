@@ -9,6 +9,8 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:loveiscaring/auth/model/auth_model.dart';
 import 'package:loveiscaring/auth/pages/register_page.dart';
 
+import '../../main.dart';
+
 class MyLoginPage extends StatefulWidget {
   const MyLoginPage({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class MyLoginPage extends StatefulWidget {
 }
 
 class _MyLoginPageState extends State<MyLoginPage> {
-  final _loginFormKey = GlobalKey<_MyLoginPageState>();
+  final _loginFormKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
   String username = "";
   String password1 = "";
@@ -29,18 +31,13 @@ class _MyLoginPageState extends State<MyLoginPage> {
   }
 
   onPressed(BuildContext context, request) async {
-    final response = await request.login(
-        "https://loveiscaring.up.railway.app/authentication/login//auth/login/",
-        {
-          'username': username,
-          'password': password1,
-        });
+    final response = await request
+        .login("https://loveiscaring.up.railway.app/authentication/login-async", {
+      'username': username,
+      'password': password1,
+    });
     if (request.loggedIn) {
       // persist cookies
-      request.cookies['user'] =
-          (const JsonEncoder()).convert(response['user_data']);
-      request.persist((const JsonEncoder()).convert(request.cookies));
-
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Berhasil Login"),
       ));
@@ -82,13 +79,13 @@ class _MyLoginPageState extends State<MyLoginPage> {
     final request = context.watch<CookieRequest>();
     // The rest of your widgets are down below
     return Scaffold(
-      drawer: const Hamburger(),
+      //drawer: const Hamburger(),
       body: Form(
         key: _loginFormKey,
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('loveiscaring/assets/login.png'),
+                image: AssetImage('assets/images/login.png'),
                 fit: BoxFit.cover),
           ),
           child: Scaffold(
@@ -96,10 +93,10 @@ class _MyLoginPageState extends State<MyLoginPage> {
             body: Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 35, top: 130),
-                  child: Text(
+                  padding: const EdgeInsets.only(left: 35, top: 130),
+                  child: const Text(
                     'Welcome\nBack',
-                    style: TextStyle(color: Colors.white, fontSize: 33),
+                    style: TextStyle(color: Colors.black, fontSize: 33),
                   ),
                 ),
                 SingleChildScrollView(
@@ -127,8 +124,15 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                     username = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    username = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Username tidak boleh kosong!';
                                   }
                                   return null;
@@ -138,27 +142,33 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                 height: 30,
                               ),
                               TextFormField(
-                                style: const TextStyle(),
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    fillColor: Colors.grey.shade100,
-                                    filled: true,
-                                    hintText: "Password",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                                onChanged: (String? value) {
-                                  setState(() {
-                                    password1 = value!;
-                                  });
-                                },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Password tidak boleh kosong!';
-                                  }
-                                  return null;
-                                }
-                              ),
+                                  style: const TextStyle(),
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      hintText: "Password",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      password1 = value!;
+                                    });
+                                  },
+                                  onSaved: (String? value) {
+                                    setState(() {
+                                      password1 = value!;
+                                    });
+                                  },
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Password tidak boleh kosong!';
+                                    }
+                                    return null;
+                                  }),
                               const SizedBox(
                                 height: 40,
                               ),
@@ -177,12 +187,12 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                     backgroundColor: Color(0xff4c505b),
                                     child: IconButton(
                                         color: Colors.white,
-                                          onPressed: () async {
-                                            if (_loginFormKey.currentState!
-                                                .validate()) {
-                                              onPressed(context, request);
-                                            }
-                                          },
+                                        onPressed: () async {
+                                          if (_loginFormKey.currentState!
+                                              .validate()) {
+                                            onPressed(context, request);
+                                          }
+                                        },
                                         icon: const Icon(
                                           Icons.arrow_forward,
                                         )),
@@ -198,9 +208,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pushNamed(context, 'register');
+                                      Navigator.pushNamed(context, "/register");
                                     },
-                                    style: ButtonStyle(),
+                                    style: const ButtonStyle(),
                                     child: const Text(
                                       'Sign Up',
                                       textAlign: TextAlign.left,
