@@ -73,6 +73,7 @@ class ArtikelCard extends StatelessWidget {
                               descriptionText,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
+                                  fontFamily: 'Helvetica'
                               ),
                             ),
                           )
