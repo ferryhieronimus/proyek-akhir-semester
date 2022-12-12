@@ -30,7 +30,7 @@ class _FormNotePageState extends State<FormNotePage> {
         return Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
-                title: Text("LoveIsCaring", style: const TextStyle(color: Colors.black)),
+                title: Text("My Notes", style: const TextStyle(color: Colors.black)),
 
                 backgroundColor: const Color(0xfff9f9f9),
                 elevation: 16.0,
