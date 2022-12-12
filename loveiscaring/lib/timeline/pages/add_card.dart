@@ -63,7 +63,7 @@ class _TambahCardPageState extends State<TambahCardPage> {
                     // Validator sebagai validasi form
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
-                        return 'Judul tidak boleh kosong!';
+                        return 'Pesan tidak boleh kosong!';
                       }
                       return null;
                     },
@@ -88,7 +88,7 @@ class _TambahCardPageState extends State<TambahCardPage> {
                     },
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
-                        return 'Judul tidak boleh kosong!';
+                        return 'Deskripsi tidak boleh kosong!';
                       }
                       return null;
                     },
@@ -110,8 +110,8 @@ class _TambahCardPageState extends State<TambahCardPage> {
                             'desc': desc,
                           },
                         );
+                        Navigator.pop(context);
                       }
-                      Navigator.pop(context);
                     },
                     child: const Text(
                       "Simpan",

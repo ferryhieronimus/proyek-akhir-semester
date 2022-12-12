@@ -113,7 +113,7 @@ class _TimelinePage extends State<TimelinePage> {
             Navigator.push(context, request.loggedIn ?
             MaterialPageRoute(builder: (context) => const TambahCardPage()) :
             MaterialPageRoute(builder: (context) => const MyLoginPage(),
-            ));
+            )).then((value)=> setState((){}));
           },
           backgroundColor: const Color(0xFFCEA16A),
           label: request.loggedIn ? const Icon(Icons.add) : Text('Login'),
