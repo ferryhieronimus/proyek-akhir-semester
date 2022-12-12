@@ -1,4 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:loveiscaring/user_profile/page/formNote_userProfile.dart';
+import 'package:loveiscaring/user_profile/page/showMyNote.dart';
+
+class UserProfilePage extends StatefulWidget {
+    const UserProfilePage({super.key});
+
+    @override
+    State<UserProfilePage> createState() => _userProfilePageState();
+}
+
+class _userProfilePageState extends State<UserProfilePage> {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
+
     @override
     Widget build(BuildContext context) {
         return Scaffold(
