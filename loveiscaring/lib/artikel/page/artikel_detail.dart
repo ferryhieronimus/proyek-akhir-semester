@@ -63,7 +63,8 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                                 snapshot.data!.title,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    fontSize: 28, fontWeight: FontWeight.w400),
+                                    fontSize: 28, fontWeight: FontWeight.w400,
+                                ),
                               ),
                             )
                           ],
@@ -87,7 +88,7 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                               Text(
                                 snapshot.data!.deskripsi,
                                 style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w200),
+                                    fontSize: 16, fontFamily: 'Helvetica'),
                               ),
                               const SizedBox(height: largeHeight),
                               const Text("Bagaimana cara mencegahnya?",
@@ -97,14 +98,14 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                               Text(
                                 snapshot.data!.subpencegah,
                                 style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w200),
+                                    fontSize: 16, fontFamily: 'Helvetica'),
                               ),
                               const SizedBox(height: smallHeight),
                               for (String tips in snapshot.data!.tips)
                                 Text("• $tips",
                                     style: const TextStyle(
                                         fontSize: 16,
-                                        fontWeight: FontWeight.w200))
+                                        fontFamily: 'Helvetica'))
                             ],
                           ),
                         ),
