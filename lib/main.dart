@@ -168,9 +168,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ));
                   }
                 },
-            ListTile(
-              title: Text(
-                "Logout",
               ),
             ),
           ],
