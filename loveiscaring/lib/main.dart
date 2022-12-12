@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'timeline/pages/timeline.dart';
 import 'artikel/page/artikel_detail.dart';
 import 'artikel/widget/artikel_card.dart';
+import 'package:loveiscaring/user_profile/page/user_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -167,6 +168,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ));
                   }
                 },
+            ListTile(
+              title: Text(
+                "Logout",
               ),
             ),
           ],
