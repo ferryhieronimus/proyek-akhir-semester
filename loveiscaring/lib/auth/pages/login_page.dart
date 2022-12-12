@@ -32,10 +32,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
   onPressed(BuildContext context, request) async {
     final response = await request
-        .login("https://loveiscaring.up.railway.app/authentication/login-async", {
+        .login("https://loveiscaring.up.railway.app/authentication/login-async/", {
       'username': username,
       'password': password1,
     });
+
     if (request.loggedIn) {
       // persist cookies
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

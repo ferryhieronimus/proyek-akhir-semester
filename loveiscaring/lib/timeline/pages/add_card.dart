@@ -103,9 +103,9 @@ class _TambahCardPageState extends State<TambahCardPage> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        http.Response response = await http.post(
-                          Uri.parse('https://loveiscaring.up.railway.app/timeline/add-card-flutter/'),
-                          body: {
+                        final response = await request.post(
+                          'https://loveiscaring.up.railway.app/timeline/add-card/',
+                          {
                             'text': _text,
                             'desc': desc,
                           },
