@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:loveiscaring/page/drawer.dart';
-import 'package:loveiscaring/page/user_profile.dart';
-
+// import 'package:loveiscaring/page/drawer.dart';
+import 'package:loveiscaring/user_profile/page/user_profile.dart';
+import 'package:loveiscaring/user_profile/page/formNote_userProfile.dart';
 
 class ShowMyNotePage extends StatefulWidget {
     const ShowMyNotePage({super.key});
@@ -20,13 +20,18 @@ class _showMyNotePageState extends State<ShowMyNotePage> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: const Text('My Notes'),
-                backgroundColor: const Color(0xFFE4B654), // warna appbar
+                title: const Text('LoveIsCaring', style: const TextStyle(color: Colors.black)),
+                backgroundColor: const Color(0xfff9f9f9),
+                elevation: 16.0,
+                iconTheme: const IconThemeData(
+                    color: Colors.black,
+                ),
             ),
 
-            drawer: buildDrawer(context),
+            // drawer: buildDrawer(context),
 
             body:ListView.builder(
+                itemCount: daftarJudul.length,
                 itemBuilder: (context, index) {
                     return Card(
                         child: Padding(
@@ -44,8 +49,7 @@ class _showMyNotePageState extends State<ShowMyNotePage> {
                                                 textAlign: TextAlign.left),
                                             ),
                                     ),
-                                ],
-                                children: [
+
                                     // Deskripsi note
                                     Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -55,13 +59,12 @@ class _showMyNotePageState extends State<ShowMyNotePage> {
                                                 daftarDeskripsi[index], style: TextStyle(fontSize: 15),
                                                 textAlign: TextAlign.left),
                                         ),
-                                    ),   
-                                ],
+                                    ),  
+                                ],     
                             )
                         ),
                     );
                 },
-                itemCount: daftarJudul.length,
             ),
         );
     }
