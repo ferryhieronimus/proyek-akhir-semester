@@ -8,6 +8,8 @@
 - Fathan Hadyan (NPM 2106751940)
 - Meilany Mita Hapsari (NPM 2106751436)
 
+## Tautan Aplikasi
+[![Build status](https://build.appcenter.ms/v0.1/apps/5dcd4ca0-3225-4acf-9e2f-3ad3527ba530/branches/main/badge)](https://appcenter.ms)
 
 ## Deskripsi aplikasi
 
