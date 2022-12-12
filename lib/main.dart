@@ -146,7 +146,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-
+            Visibility(
+              visible: request.loggedIn,
+              child: ListTile(
+                title: Text(
+                  "Profile",
+                  style: TextStyle(color:  Color(0xFFCEA16A)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserProfilePage()),
+                  );
+                },
+              ),
+            ),
             Visibility(
               visible: request.loggedIn,
               child: ListTile(
