@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loveiscaring/artikel/model/artikel.dart';
-import 'package:loveiscaring/artikel/model/kartu.dart';
 
 import '../widget/response_card.dart';
 
@@ -15,13 +14,11 @@ class ArtikelDetail extends StatefulWidget {
 
 class _ArtikelDetailState extends State<ArtikelDetail> {
   Future<Artikel>? artikel;
-  late Future<List<Kartu>> daftarKartu;
 
   @override
   void initState() {
     super.initState();
     artikel = fetchArtikel(widget.disorder);
-    daftarKartu = fetchCard(widget.disorder);
   }
 
   @override
@@ -112,30 +109,28 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                         const Text("Bagaimana Tanggapan Anda?",
                             style: TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.bold)),
-                        FutureBuilder(
-                          future: daftarKartu,
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (!snapshot.hasData) {
-                              return const Text("Belum ada tanggapan!");
-                            } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  return ResponseCard(
-                                    height: 225,
-                                    width: 200,
-                                    backgroundColor: Colors.white,
-                                    shadowColor: Colors.black.withOpacity(0.4),
-                                    responseText:
-                                        snapshot.data![index].fields.desc,
-                                  );
-                                },
-                              );
-                            }
-                          },
+                        // Offstage(
+                        //   offstage: (!isUser.logIn),
+                        //   child: ElevatedButton(
+                        //     child: Text("A"),
+                        //     onPressed: (){
+
+                        //     },
+                        //   )
+                        // ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 3,
+                          itemBuilder: ((context, index) {
+                            return ResponseCard(
+                              height: 225,
+                              width: 200,
+                              backgroundColor: Colors.white,
+                              shadowColor: Colors.black.withOpacity(0.4),
+                              responseText: "Ini dummy teks ke $index",
+                              //responseText: json.data[index].text,
+                            );
+                          }),
                         ),
                         // TODO lanjutin
                       ],
