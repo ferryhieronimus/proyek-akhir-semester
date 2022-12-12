@@ -20,15 +20,16 @@ class _showMyNotePageState extends State<ShowMyNotePage> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: const Text('LoveIsCaring', style: const TextStyle(color: Colors.black)),
+                title: const Text(
+                    'My Notes',
+                    style: const TextStyle(color: Colors.black)
+                ),
                 backgroundColor: const Color(0xfff9f9f9),
                 elevation: 16.0,
                 iconTheme: const IconThemeData(
                     color: Colors.black,
                 ),
             ),
-
-            // drawer: buildDrawer(context),
 
             body:ListView.builder(
                 itemCount: daftarJudul.length,
