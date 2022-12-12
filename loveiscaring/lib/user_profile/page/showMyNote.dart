@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:loveiscaring/page/drawer.dart';
 import 'package:loveiscaring/user_profile/page/user_profile.dart';
-import 'package:loveiscaring/user_profile/page/formNote.dart';
+import 'package:loveiscaring/user_profile/page/formNote_userProfile.dart';
 
 class ShowMyNotePage extends StatefulWidget {
     const ShowMyNotePage({super.key});
