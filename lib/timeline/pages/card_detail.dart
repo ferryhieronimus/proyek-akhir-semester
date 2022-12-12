@@ -40,81 +40,69 @@ class CardDetail extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            indexx%6 == 0 ? 'assets/images/Oren.JPG' :
-                            indexx%6 == 1 ? 'assets/images/Hijau.jpg' :
-                            indexx%6 == 2 ? 'assets/images/Ungu.jpg' :
-                            indexx%6 == 3 ? 'assets/images/Blossom.JPG' :
-                            indexx%6 == 4 ? 'assets/images/Krem.jpg' :
-                            'assets/images/login.jpg'),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Center(
-                    child: SingleChildScrollView(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 240),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: Transform.translate(
-                                    offset: const Offset(-4, -4),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color(listColor[(indexx)%6]),
-                                            offset: Offset(6, 4),
+                  color: Color(0xfffaf5f0),
+                  child: SingleChildScrollView(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 240),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Transform.translate(
+                                  offset: const Offset(-4, -4),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(listColor[(indexx)%6]),
+                                          offset: Offset(6, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => const TambahCardPage()),
+                                        );
+                                      },
+                                      child: Card(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.zero,
+                                          side: BorderSide(
+                                            color: Colors.grey,
                                           ),
-                                        ],
-                                      ),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) => const TambahCardPage()),
-                                          );
-                                        },
-                                        child: Card(
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.zero,
-                                            side: BorderSide(
-                                              color: Colors.grey,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            ListTile(
+                                              title: Text("${snapshot.data![indexx].fields.text}",
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                  )
+                                              ),
+                                              subtitle: Text("${snapshot.data![indexx].fields.desc}"),
                                             ),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              ListTile(
-                                                title: Text("${snapshot.data![indexx].fields.text}",
-                                                    style: TextStyle(
-                                                      fontSize: 18,
-                                                    )
-                                                ),
-                                                subtitle: Text("${snapshot.data![indexx].fields.desc}"),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text(request.loggedIn ? "${snapshot.data![indexx].fields.username}" : text2),
-                                                  const SizedBox(width: 8),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: <Widget>[
+                                                Text(request.loggedIn ? "${snapshot.data![indexx].fields.username}" : text2),
+                                                const SizedBox(width: 8),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        )
-                    ),
+                        ),
+                      )
                   ),
                 );
               }
