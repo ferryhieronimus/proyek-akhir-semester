@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:loveiscaring/auth/pages/login_page.dart';
 import 'package:loveiscaring/widgets/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:validators/validators.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -18,10 +19,10 @@ class _MyRegisterState extends State<MyRegister> {
   bool isPasswordVisible = false;
   String firstName = "";
   String lastname = "";
-  int age = 0;
-  int dateBirth = 0;
+  String age = "";
+  String dateBirth = "";
   String email = "";
-  int phoneNumber = 0;
+  String phoneNumber = "";
   String username = "";
   String password = "";
   String confirmPass = "";
@@ -33,11 +34,20 @@ class _MyRegisterState extends State<MyRegister> {
   }
 
   onPressed(BuildContext context, request) async {
-    final response = await request
-        .post("https://loveiscaring.up.railway.app/authentication/register-async/", {
-      'username': username,
-    });
-    if (response['status'] == true) {
+    final response = await request.postJson(
+        "http://localhost:8000/authentication/register-async/",
+        convert.jsonEncode(<String, String>{
+          'first_name': firstName,
+          'last_name': lastname,
+          'age': age,
+          'date_birth': dateBirth,
+          'email': email,
+          'phone_number': phoneNumber,
+          'username': username,
+          'password': password,
+          'password2': confirmPass,
+        }));
+    if (response['status'] == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Berhasil Register"),
       ));
@@ -115,8 +125,15 @@ class _MyRegisterState extends State<MyRegister> {
                                     firstName = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    firstName = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'First Name harus diisi!';
                                   }
                                   return null;
@@ -141,7 +158,8 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Last Name",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
@@ -150,8 +168,15 @@ class _MyRegisterState extends State<MyRegister> {
                                     lastname = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    lastname = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Last Name harus diisi!';
                                   }
                                   return null;
@@ -177,18 +202,29 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Age",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    age = int.parse(value!);
+                                    age = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    age = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Age harus diisi!';
+                                  }
+                                  if (!isNumeric(value)) {
+                                    return 'Age harus berupa angka';
                                   }
                                   return null;
                                 },
@@ -212,17 +248,40 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Date Birth",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    dateBirth = int.parse(value!);
+                                    dateBirth = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    dateBirth = value!;
+                                  });
+                                },
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2099),
+                                  );
+
+                                  // if (pickedDate != null) {
+                                  //   setState(() {
+                                  //     dateInput.text = DateFormat('dd/MM/yyyy')
+                                  //         .format(pickedDate);
+                                  //   });
+                                  // }
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Date Birth harus diisi!';
                                   }
                                   return null;
@@ -230,7 +289,8 @@ class _MyRegisterState extends State<MyRegister> {
                               ),
                               const SizedBox(
                                 height: 30,
-                              ),TextFormField(
+                              ),
+                              TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
@@ -246,7 +306,8 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Email",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
@@ -255,15 +316,24 @@ class _MyRegisterState extends State<MyRegister> {
                                     email = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    email = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Email harus diisi!';
                                   }
                                   return null;
                                 },
-                              ),const SizedBox(
+                              ),
+                              const SizedBox(
                                 height: 30,
-                              ),TextFormField(
+                              ),
+                              TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
@@ -279,24 +349,37 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Phone Number",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
                                 onChanged: (String? value) {
                                   setState(() {
-                                    phoneNumber = int.parse(value!);
+                                    phoneNumber = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    phoneNumber = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Phone Number harus diisi!';
+                                  }
+                                  if (!isNumeric(value)) {
+                                    return 'Phone Number harus berupa angka berjumlah 12 digit';
                                   }
                                   return null;
                                 },
-                              ),const SizedBox(
+                              ),
+                              const SizedBox(
                                 height: 30,
-                              ),TextFormField(
+                              ),
+                              TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
@@ -312,7 +395,8 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Username",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
@@ -321,15 +405,24 @@ class _MyRegisterState extends State<MyRegister> {
                                     username = value!;
                                   });
                                 },
-                                validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    username = value!;
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
                                     return 'Username harus diisi!';
                                   }
                                   return null;
                                 },
-                              ),const SizedBox(
+                              ),
+                              const SizedBox(
                                 height: 30,
-                              ),TextFormField(
+                              ),
+                              TextFormField(
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
@@ -345,11 +438,17 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Password",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
                                 onChanged: (String? value) {
+                                  setState(() {
+                                    password = value!;
+                                  });
+                                },
+                                onSaved: (String? value) {
                                   setState(() {
                                     password = value!;
                                   });
@@ -359,11 +458,12 @@ class _MyRegisterState extends State<MyRegister> {
                                     return 'Password tidak boleh kosong!';
                                   }
                                   if (value != confirmPass) {
-                                      return 'Password and Confirm Password tidak sama';
-                                    }
+                                    return 'Password and Confirm Password tidak sama';
+                                  }
                                   return null;
                                 },
-                              ),const SizedBox(
+                              ),
+                              const SizedBox(
                                 height: 30,
                               ),
                               TextFormField(
@@ -382,7 +482,8 @@ class _MyRegisterState extends State<MyRegister> {
                                       ),
                                     ),
                                     hintText: "Confirm Password",
-                                    hintStyle: const TextStyle(color: Colors.white),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
@@ -391,13 +492,18 @@ class _MyRegisterState extends State<MyRegister> {
                                     confirmPass = value!;
                                   });
                                 },
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    confirmPass = value!;
+                                  });
+                                },
                                 validator: (String? value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Confirm Password tidak boleh kosong!';
                                   }
-                                   if (value != password) {
-                                      return 'Password and Confirm Password tidak sama';
-                                    }
+                                  if (value != password) {
+                                    return 'Password and Confirm Password tidak sama';
+                                  }
                                   return null;
                                 },
                               ),
@@ -419,9 +525,9 @@ class _MyRegisterState extends State<MyRegister> {
                                         color: Colors.white,
                                         onPressed: () {
                                           if (_registerFormKey.currentState!
-                                                .validate()) {
-                                              onPressed(context, request);
-                                            }
+                                              .validate()) {
+                                            onPressed(context, request);
+                                          }
                                         },
                                         icon: const Icon(
                                           Icons.arrow_forward,
