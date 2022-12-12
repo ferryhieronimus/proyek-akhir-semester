@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loveiscaring/auth/pages/login_page.dart';
 import 'package:loveiscaring/widgets/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'dart:convert' as convert;
+import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
@@ -15,6 +15,7 @@ class MyRegister extends StatefulWidget {
   _MyRegisterState createState() => _MyRegisterState();
 }
 
+
 class _MyRegisterState extends State<MyRegister> {
   final _registerFormKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
@@ -22,6 +23,7 @@ class _MyRegisterState extends State<MyRegister> {
   String lastname = "";
   String age = "";
   String dateBirth = "";
+  DateTime tanggal = DateTime.now();
   String email = "";
   String phoneNumber = "";
   String username = "";
@@ -34,11 +36,16 @@ class _MyRegisterState extends State<MyRegister> {
     });
   }
 
+   bool isValidEmail(String email) {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
+  }
+
   onPressed(BuildContext context, request) async {
-    final response = await request.postJson(
-        "http://localhost:8000/authentication/register-async/",
-        convert.jsonEncode(<String, String>{
-          'first_name': firstName,
+    final url = Uri.parse('https://loveiscaring.up.railway.app/authentication/register-async/');
+      Map<String, String> requestBody = <String, String>{
+       'first_name': firstName,
           'last_name': lastname,
           'age': age,
           'date_birth': dateBirth,
@@ -47,8 +54,20 @@ class _MyRegisterState extends State<MyRegister> {
           'username': username,
           'password': password,
           'password2': confirmPass,
-        }));
-    if (response['status'] == 'success') {
+      };
+      var request = http.MultipartRequest('POST', url)
+        ..fields.addAll(requestBody);
+      var response = await request.send();
+      final respStr = await response.stream.bytesToString();
+      
+      var encoded = json.decode(respStr);
+
+    // final response = await request.postJson(
+    //     "http://localhost:8000/authentication/register-async/",
+    //     convert.jsonEncode(<String, String>{
+          
+    //     }));
+    if (encoded['status'] == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Berhasil Register"),
       ));
@@ -188,7 +207,7 @@ class _MyRegisterState extends State<MyRegister> {
                               ),
                               TextFormField(
                                 style: const TextStyle(color: Colors.white),
-                                obscureText: true,
+                                obscureText: false,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -254,35 +273,33 @@ class _MyRegisterState extends State<MyRegister> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
-                                // onPressed: () async {
-                                //   showDatePicker(
-                                //       context: context,
-                                //       initialDate: dateBirth,
-                                //       firstDate: DateTime(2000),
-                                //       lastDate:
-                                //           DateTime(2099).then((selectedDate) {
-                                //         setState(() {
-                                //           if (selectedDate != null) {
-                                //             dateBirth = DateFormat('dd-MM-yyyy').format(selectedDate);;
-                                //           }
-                                //         });
-                                //       }));
+                                onTap: () async {
+                                  showDatePicker(
+                                      context: context,
+                                      initialDate: tanggal,
+                                      firstDate: DateTime(2000),
+                                      lastDate:
+                                          DateTime(2099)).then((tanggal) {  
+                                        setState(() {
+                                          if (tanggal != null) {
+                                            dateBirth = DateFormat('yyyy-MM-dd').format(tanggal);
+                                          }
+                                        });
+                                      });
 
-                                //   // if (pickedDate != null) {
-                                //   //   setState(() {
-                                //   //     dateInput.text = DateFormat('dd/MM/yyyy')
-                                //   //         .format(pickedDate);
-                                //   //   });
-                                //   // }
-                                // },
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Date Birth harus diisi!';
-                                  }
-                                  return null;
+                                  // if (pickedDate != null) {
+                                  //   setState(() {
+                                  //     dateInput.text = DateFormat('dd/MM/yyyy')
+                                  //         .format(pickedDate);
+                                  //   });
+                                  // }
                                 },
+                                onSaved: (String? value) {
+                                  setState(() {
+                                    dateBirth = value!;
+                                  });
+                                },
+                    
                               ),
                               const SizedBox(
                                 height: 30,
@@ -323,6 +340,9 @@ class _MyRegisterState extends State<MyRegister> {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'Email harus diisi!';
+                                  }
+                                  if(!isValidEmail(email)){
+                                    return 'Masukkan email dengan format yang benar!, (Ex: dummy@korongko.com)';
                                   }
                                   return null;
                                 },
@@ -368,7 +388,10 @@ class _MyRegisterState extends State<MyRegister> {
                                     return 'Phone Number harus diisi!';
                                   }
                                   if (!isNumeric(value)) {
-                                    return 'Phone Number harus berupa angka berjumlah 12 digit';
+                                    return 'Phone Number harus berupa angka ';
+                                  }
+                                  if( value.length != 12){
+                                    return 'Phone Number harus memiliki 12 digit';
                                   }
                                   return null;
                                 },
@@ -421,6 +444,7 @@ class _MyRegisterState extends State<MyRegister> {
                               ),
                               TextFormField(
                                 style: const TextStyle(color: Colors.white),
+                                obscureText: true,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -454,6 +478,9 @@ class _MyRegisterState extends State<MyRegister> {
                                   if (value == null || value.isEmpty) {
                                     return 'Password tidak boleh kosong!';
                                   }
+                                  if(value.length < 8){
+                                    return 'Password minimal memiliki 8 karakter';
+                                  }
                                   if (value != confirmPass) {
                                     return 'Password and Confirm Password tidak sama';
                                   }
@@ -465,6 +492,7 @@ class _MyRegisterState extends State<MyRegister> {
                               ),
                               TextFormField(
                                 style: const TextStyle(color: Colors.white),
+                                obscureText: true,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
