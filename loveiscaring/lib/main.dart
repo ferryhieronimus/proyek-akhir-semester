@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'Kanit',
                     primarySwatch: Colors.blue,
                 ),
-                home: const MyHomePage(title: 'Flutter App'),
+                home: const MyHomePage(title: 'love is caring'),
                 initialRoute: "/",
                 routes: {
                     "/login": (BuildContext context) => const MyLoginPage(),
