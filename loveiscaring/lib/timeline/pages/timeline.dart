@@ -42,6 +42,7 @@ class _TimelinePage extends State<TimelinePage> {
               } else {
                   return Container(
                     color: Color(0xfffaf5f0),
+                    padding: const EdgeInsets.only(top: 12),
                     child: ListView.builder(
                         itemCount: snapshot.data!.length,
                         itemBuilder: (_, index)=> Container(
