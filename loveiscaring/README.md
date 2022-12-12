@@ -74,7 +74,17 @@ Card informasi adalah sebuah komponen yang berisikan:
     - Nama penyakit
     - Deskripsi singkat
     - Link untuk menuju halaman tersebut.
-    
+	
+## Pembagian tugas masing-masing anggota
+Berikut adalah pembagian tugas kelompok kami.
+| Nama  | Modul yang Dikerjakan |
+|-------|-----------------------|
+| Nyoo Steven | Halaman Utama dan Artikel |
+| Jessica Aulia | Halaman Feedback |
+| Ferry | Halaman Utama, Halaman Timeline, Card Timeline, Halaman About |
+| Fathan Hadyan | Halaman Autentikasi |
+| Meilany Mita Hapsari |Halaman Profile, Halaman Notes dan Quotes milik user login|
+
 ## Alur pengintegrasian dengan web service 
 
 Pengintegrasian dengan web service dalam aplikasi ini adalah mengambil data yang sudah ada di website loveiscaring. Data yang sudah ada dari website loveiscaring akan diambil. Pertama, kita tambahkan dependency http ke proyek loveiscaring. Dependency ini digunakan untuk bertukar data melalui HTTP request, seperti GET, POST, PUT, dan lain-lain. Kemudian, kita buat model sesuai dengan respons dari data yang berasal dari web service tersebut. Lalu, kita buat http request ke web service menggunakan dependency http. Terakhir, data tersebut akan ditampilkan
