@@ -6,6 +6,7 @@ import 'dart:convert' as convert;
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
+import 'package:intl/intl.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -253,31 +254,27 @@ class _MyRegisterState extends State<MyRegister> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
-                                onChanged: (String? value) {
-                                  setState(() {
-                                    dateBirth = value!;
-                                  });
-                                },
-                                onSaved: (String? value) {
-                                  setState(() {
-                                    dateBirth = value!;
-                                  });
-                                },
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2099),
-                                  );
+                                // onPressed: () async {
+                                //   showDatePicker(
+                                //       context: context,
+                                //       initialDate: dateBirth,
+                                //       firstDate: DateTime(2000),
+                                //       lastDate:
+                                //           DateTime(2099).then((selectedDate) {
+                                //         setState(() {
+                                //           if (selectedDate != null) {
+                                //             dateBirth = DateFormat('dd-MM-yyyy').format(selectedDate);;
+                                //           }
+                                //         });
+                                //       }));
 
-                                  // if (pickedDate != null) {
-                                  //   setState(() {
-                                  //     dateInput.text = DateFormat('dd/MM/yyyy')
-                                  //         .format(pickedDate);
-                                  //   });
-                                  // }
-                                },
+                                //   // if (pickedDate != null) {
+                                //   //   setState(() {
+                                //   //     dateInput.text = DateFormat('dd/MM/yyyy')
+                                //   //         .format(pickedDate);
+                                //   //   });
+                                //   // }
+                                // },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
