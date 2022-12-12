@@ -23,6 +23,7 @@ class _TimelinePage extends State<TimelinePage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: AppBar(
           iconTheme: const IconThemeData(
             color: Colors.black, //change your color here
@@ -117,7 +118,7 @@ class _TimelinePage extends State<TimelinePage> {
             )).then((value)=> setState((){}));
           },
           backgroundColor: const Color(0xFFCEA16A),
-          label: request.loggedIn ? const Icon(Icons.add) : Text('Login'),
+          label: request.loggedIn ? const Icon(Icons.add) : Text('Login untuk menambahkan'),
         )
     );
   }
