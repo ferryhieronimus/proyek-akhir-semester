@@ -9,6 +9,11 @@ import 'timeline/pages/timeline.dart';
 import 'artikel/page/artikel_detail.dart';
 import 'artikel/widget/artikel_card.dart';
 
+import 'package:loveiscaring/user_profile/page/user_profile.dart';
+import 'package:loveiscaring/feedback/pages/feedback_page.dart';
+import 'package:loveiscaring/feedback/pages/feedback_page.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -146,6 +151,49 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              title: const Text("Feedback"),
+              onTap: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyFeedbackPage()),
+                );
+              },
+            ),
+            Visibility(
+              visible: request.loggedIn,
+              child: ListTile(
+                title: Text(
+                  "Profile",
+                  style: TextStyle(color:  Color(0xFFCEA16A)),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserProfilePage()),
+                  );
+                },
+              ),
+            ),
+            Visibility(
+              visible: request.loggedIn,
+              child: ListTile(
+                title: Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () async {
+                  final response = await request
+                      .logout("https://loveiscaring.up.railway.app/authentication/logout-async/");
+                  if (response['status']) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Successfully logged out!"),
+                    ));
+                     Navigator.pushNamed(context, "/");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("An error occured, please try again."),
+                    ));
+                  }
+                },
               title: Text(
                 "Logout",
               ),
