@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:loveiscaring/auth/pages/login_page.dart';
+import 'package:loveiscaring/auth/pages/register_page.dart';
+import 'package:loveiscaring/widgets/drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 import 'timeline/pages/timeline.dart';
 import 'artikel/page/artikel_detail.dart';
 import 'artikel/widget/artikel_card.dart';
@@ -13,15 +18,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LoveIsCaring',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Kanit',
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'LoveIsCaring'),
-    );
+    return Provider(
+            create: (_) {
+                CookieRequest request = CookieRequest();
+                return request;
+            },
+            child: MaterialApp(
+              
+                title: 'LoveIsCaring',
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  fontFamily: 'Kanit',
+                    primarySwatch: Colors.blue,
+                ),
+                home: const MyHomePage(title: 'Flutter App'),
+                initialRoute: "/",
+                routes: {
+                    "/login": (BuildContext context) => const MyLoginPage(),
+                    "/register": (BuildContext context) => const MyRegister(),
+                },
+            ),
+        );
   }
 }
 
@@ -86,7 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, "/login");
+              },
             ),
           )
         ],
