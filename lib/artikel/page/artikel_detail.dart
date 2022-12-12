@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loveiscaring/artikel/model/artikel.dart';
+import 'package:loveiscaring/artikel/model/kartu.dart';
 
 import '../widget/response_card.dart';
 
@@ -14,11 +15,13 @@ class ArtikelDetail extends StatefulWidget {
 
 class _ArtikelDetailState extends State<ArtikelDetail> {
   Future<Artikel>? artikel;
+  late Future<List<Kartu>> daftarKartu;
 
   @override
   void initState() {
     super.initState();
     artikel = fetchArtikel(widget.disorder);
+    daftarKartu = fetchCard(widget.disorder);
   }
 
   @override
@@ -60,8 +63,7 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                                 snapshot.data!.title,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    fontSize: 28, fontWeight: FontWeight.w400,
-                                ),
+                                    fontSize: 28, fontWeight: FontWeight.w400),
                               ),
                             )
                           ],
@@ -77,7 +79,7 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                         const SizedBox(height: largeHeight),
                         Container(
                           decoration:
-                              const BoxDecoration(color: Color(0xfffaf5f0)),
+                          const BoxDecoration(color: Color(0xfffaf5f0)),
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +87,7 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                               Text(
                                 snapshot.data!.deskripsi,
                                 style: const TextStyle(
-                                    fontSize: 16, fontFamily: 'Helvetica'),
+                                    fontSize: 16, fontWeight: FontWeight.w200),
                               ),
                               const SizedBox(height: largeHeight),
                               const Text("Bagaimana cara mencegahnya?",
@@ -95,42 +97,44 @@ class _ArtikelDetailState extends State<ArtikelDetail> {
                               Text(
                                 snapshot.data!.subpencegah,
                                 style: const TextStyle(
-                                    fontSize: 16, fontFamily: 'Helvetica'),
+                                    fontSize: 16, fontWeight: FontWeight.w200),
                               ),
                               const SizedBox(height: smallHeight),
                               for (String tips in snapshot.data!.tips)
                                 Text("• $tips",
                                     style: const TextStyle(
                                         fontSize: 16,
-                                        fontFamily: 'Helvetica'))
+                                        fontWeight: FontWeight.w200))
                             ],
                           ),
                         ),
                         const Text("Bagaimana Tanggapan Anda?",
                             style: TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.bold)),
-                        // Offstage(
-                        //   offstage: (!isUser.logIn),
-                        //   child: ElevatedButton(
-                        //     child: Text("A"),
-                        //     onPressed: (){
-
-                        //     },
-                        //   )
-                        // ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 3,
-                          itemBuilder: ((context, index) {
-                            return ResponseCard(
-                              height: 225,
-                              width: 200,
-                              backgroundColor: Colors.white,
-                              shadowColor: Colors.black.withOpacity(0.4),
-                              responseText: "Ini dummy teks ke $index",
-                              //responseText: json.data[index].text,
-                            );
-                          }),
+                        FutureBuilder(
+                          future: daftarKartu,
+                          builder: (context, snapshot) {
+                            if (snapshot.data == null) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (!snapshot.hasData) {
+                              return const Text("Belum ada tanggapan!");
+                            } else {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return ResponseCard(
+                                    height: 225,
+                                    width: 200,
+                                    backgroundColor: Colors.white,
+                                    shadowColor: Colors.black.withOpacity(0.4),
+                                    responseText:
+                                    snapshot.data![index].fields.desc,
+                                  );
+                                },
+                              );
+                            }
+                          },
                         ),
                         // TODO lanjutin
                       ],

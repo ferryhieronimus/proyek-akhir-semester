@@ -34,7 +34,7 @@ class ResponseCard extends StatelessWidget {
         ]),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
+            child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Align(
