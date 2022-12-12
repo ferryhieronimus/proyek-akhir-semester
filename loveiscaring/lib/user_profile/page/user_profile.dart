@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:loveiscaring/user_profile/page/formNote_userProfile.dart';
 import 'package:loveiscaring/user_profile/page/showMyNote.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'dart:convert';
+
 
 class UserProfilePage extends StatefulWidget {
     const UserProfilePage({super.key});
@@ -14,69 +18,45 @@ class _userProfilePageState extends State<UserProfilePage> {
 
     @override
     Widget build(BuildContext context) {
+
+        final request = context.watch<CookieRequest>();
+        Future<Map<String, String>> getUser() async {
+            final response = await request.get("https://loveiscaring.up.railway.app/profile/profile/");
+            return response['fields'];
+        }
+
         return Scaffold(
             key: scaffoldKey,
-            appBar: AppBar(
-                title: const Text('LoveIsCaring', style: const TextStyle(color: Colors.black, fontFamily: 'Kanit')),
-            
-                leading: GestureDetector(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset("assets/images/logo.png", width: 3, height: 3),
-                        ),
-                    onTap: () {
-                        if (scaffoldKey.currentState!.isDrawerOpen) {
-                            scaffoldKey.currentState!.closeDrawer();
-                            //close drawer, if drawer is open
-                        } else {
-                            scaffoldKey.currentState!.openDrawer();
-                            //open drawer, if drawer is closed
-                        }
-                    }
-                ),
-                actions: [
-                    Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
-                            icon: const Icon(Icons.home),
-                            onPressed: () {
-                                Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => const UserProfilePage()),
-                                );
-                            },
-                        ),
-                    )
-                ],
-                backgroundColor: const Color(0xfff9f9f9),
-                elevation: 16.0,
+            appBar:  AppBar(
                 iconTheme: const IconThemeData(
-                    color: Colors.black,
+                    color: Colors.black, //change your color here
                 ),
+                title: const Text(
+                    'Profile',
+                    style: TextStyle(color: Colors.black),
+                ),
+                backgroundColor: const Color(0xfff9f9f9),
+                elevation: 4.0,
             ),
-        
-
             // drawer: buildDrawer(context),
-
             body: SingleChildScrollView(
-                
                     padding: EdgeInsets.all(15.0),
                     child: Center(
                         child: Column(
                             children: [
                                 CircleAvatar( // Mengatur foto profile
                                     backgroundColor: Colors.white,
-                                    backgroundImage: AssetImage('assets/images/profile_pic.png'), 
+                                    backgroundImage: AssetImage('assets/images/profile_pic.png'),
                                     radius: 50.0,
                                 ),
                                 // Menampilkan data di bawah foto profil
                                 Text(
-                                    'Meilany', // ambil dari register
+                                    "meilany", // ambil dari register
                                     style: TextStyle(
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
                                     ),
-                                ), 
+                                ),
                                 Text(
                                     'hapsarimeilany@gmail.com',
                                     style: TextStyle(
@@ -95,18 +75,18 @@ class _userProfilePageState extends State<UserProfilePage> {
                                 Container(
                                     color: const Color(0xFFE4BC66),
                                     // jarak container data dengan tepi
-                                    padding: const EdgeInsets.all(25.0), 
+                                    padding: const EdgeInsets.all(25.0),
                                     child: Column(
                                         children: [
                                             Row(
                                                 children: const [
                                                     Icon(Icons.person),
                                                     SizedBox(width: 9.0), // Jarak antara icon dan text
-                                                    Text('First Name'),                                                
+                                                    Text('First Name'),
                                                     Spacer(), // Jarak antara label  dan isi data
                                                     Text('Meilany'), // ambil dari register
-                                                    
-                                                ], 
+
+                                                ],
                                             ),
                                             const Divider(), // Garis pemisah antar data
                                             Row(
@@ -116,7 +96,7 @@ class _userProfilePageState extends State<UserProfilePage> {
                                                     Text('Last Name'),
                                                     Spacer(),
                                                     Text('Hapsari'), // ambil dari register
-                                                ],                                            
+                                                ],
                                             ),
                                             const Divider(),
                                             Row(
@@ -135,7 +115,7 @@ class _userProfilePageState extends State<UserProfilePage> {
                                                     SizedBox(width: 9.0),
                                                     Text('Birth Date'),
                                                     Spacer(),
-                                                    Text('04-05-2003'), // ambil dari register  
+                                                    Text('04-05-2003'), // ambil dari register
                                                 ],
                                             ),
                                             const Divider(),
@@ -155,8 +135,8 @@ class _userProfilePageState extends State<UserProfilePage> {
                                                     SizedBox(width: 9.0),
                                                     Text('Phone Number'),
                                                     Spacer(),
-                                                    Text('0895429845040'), // ambil dari register  
-                                                ],                                          
+                                                    Text('0895429845040'), // ambil dari register
+                                                ],
                                             ),
                                         ],
                                     ),
@@ -222,7 +202,7 @@ class _userProfilePageState extends State<UserProfilePage> {
                             ],
                         )
                     ),
-                
+
             ),
         );
     }
