@@ -103,15 +103,15 @@ class _TambahCardPageState extends State<TambahCardPage> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        final response = await request.post('https://loveiscaring.up.railway.app/timeline/add-card-flutter/', {
-                          'text': _text,
-                          'desc': desc,
-                        });
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const TimelinePage()),
+                        http.Response response = await http.post(
+                          Uri.parse('https://loveiscaring.up.railway.app/timeline/add-card-flutter/'),
+                          body: {
+                            'text': _text,
+                            'desc': desc,
+                          },
                         );
                       }
+                      Navigator.pop(context);
                     },
                     child: const Text(
                       "Simpan",

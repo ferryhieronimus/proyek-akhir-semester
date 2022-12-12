@@ -50,34 +50,34 @@ class ArtikelCard extends StatelessWidget {
                     height: height,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: SizedBox(
-                    width: width / 2,
-                    height: height,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              titleText,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: SizedBox(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                titleText,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              descriptionText,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                  fontFamily: 'Helvetica'
+                            Flexible(
+                              child: Text(
+                                descriptionText,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                    fontFamily: 'Helvetica'
+                                ),
                               ),
-                            ),
-                          )
-                        ]),
+                            )
+                          ]),
+                    ),
                   ),
                 ),
               ],
