@@ -145,24 +145,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            ListTile(
-              title: Text(
-                "Logout",
+
+            Visibility(
+              visible: request.loggedIn,
+              child: ListTile(
+                title: Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () async {
+                  final response = await request
+                      .logout("https://loveiscaring.up.railway.app/authentication/logout-async/");
+                  if (response['status']) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Successfully logged out!"),
+                    ));
+                     Navigator.pushNamed(context, "/");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("An error occured, please try again."),
+                    ));
+                  }
+                },
               ),
-              onTap: () async {
-                final response = await request
-                    .logout("https://loveiscaring.up.railway.app/authentication/logout-async/");
-                if (response['status']) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Successfully logged out!"),
-                  ));
-                   Navigator.pushNamed(context, "/");
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("An error occured, please try again."),
-                  ));
-                }
-              },
             ),
           ],
         )),
