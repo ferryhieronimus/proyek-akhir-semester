@@ -36,6 +36,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
       'username': username,
       'password': password1,
     });
+
     if (request.loggedIn) {
       // persist cookies
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
