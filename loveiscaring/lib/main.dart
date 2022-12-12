@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loveiscaring/auth/pages/login_page.dart';
 import 'package:loveiscaring/auth/pages/register_page.dart';
 import 'package:loveiscaring/widgets/drawer.dart';
+import 'package:loveiscaring/timeline/pages/about.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'timeline/pages/timeline.dart';
@@ -135,142 +136,147 @@ class _MyHomePageState extends State<MyHomePage> {
           ListTile(
             title: const Text("About"),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => About()),
+              );
             },
           ),
         ],
       )),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ArtikelCard(
-                  imagePath: "assets/images/mentalhealth1.jpg",
-                  width: 600,
-                  height: 150,
-                  titleText: "Depression",
-                  descriptionText:
-                      "A group of conditions associated with the elevation or lowering of a person's mood, such as depression or bipolar disorder.",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArtikelDetail(
-                                disorder: "depression",
-                                disorderName:
-                                    disorderNameList["depression"]!)));
-                  },
-                  backgroundColor: Colors.white,
-                  shadowColor: const Color(0xffff9684)),
-              ArtikelCard(
-                  imagePath: "assets/images/mentalhealth2.jpg",
-                  width: 600,
-                  height: 150,
-                  titleText: "Schizophrenia",
-                  descriptionText:
-                      "A disorder that affects a person's ability to think, feel and behave clearly.",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArtikelDetail(
-                                disorder: "schizophrenia",
-                                disorderName:
-                                    disorderNameList["schizophrenia"]!)));
-                  },
-                  backgroundColor: Colors.white,
-                  shadowColor: const Color(0xffaca355)),
-              ArtikelCard(
-                  imagePath: "assets/images/mentalhealth3.jpg",
-                  width: 600,
-                  height: 150,
-                  titleText: "Anxiety Disorder",
-                  descriptionText:
-                      "A mental health disorder characterised by feelings of worry, anxiety or fear that are strong enough to interfere with one's daily activities.",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArtikelDetail(
-                                disorder: "anxiety",
-                                disorderName: disorderNameList["anxiety"]!)));
-                  },
-                  backgroundColor: Colors.white,
-                  shadowColor: const Color(0xff7f6485)),
-              ArtikelCard(
-                  imagePath: "assets/images/mentalhealth4.jpg",
-                  width: 600,
-                  height: 150,
-                  titleText: "Eating Disorder",
-                  descriptionText:
-                      "A mental disorder defined by abnormal eating behaviors that negatively affect a person's physical or mental health.",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArtikelDetail(
-                                disorder: "eating",
-                                disorderName: disorderNameList["eating"]!)));
-                  },
-                  backgroundColor: Colors.white,
-                  shadowColor: const Color(0xffffb8d0)),
-              ArtikelCard(
-                  imagePath: "assets/images/mentalhealth5.jpg",
-                  width: 600,
-                  height: 150,
-                  titleText: "Mood Disorder",
-                  descriptionText:
-                      "A mental health class that health professionals use to broadly describe all types of depression and bipolar disorders.",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArtikelDetail(
-                                disorder: "mood",
-                                disorderName: disorderNameList["mood"]!)));
-                  },
-                  backgroundColor: Colors.white,
-                  shadowColor: const Color(0xffe2bea6)),
-              ArtikelCard(
-                  imagePath: "assets/images/mentalhealth6.jpg",
-                  width: 600,
-                  height: 150,
-                  titleText: "PTSD",
-                  descriptionText:
-                      "A mental health condition that's triggered by a terrifying event — either experiencing it or witnessing it.",
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArtikelDetail(
-                                disorder: "ptsd",
-                                disorderName: disorderNameList["ptsd"]!)));
-                  },
-                  backgroundColor: Colors.white,
-                  shadowColor: const Color(0xff9bb39d)),
-              const SizedBox(height: 15),
-              Image.asset(
-                "assets/images/logo.png",
-                height: 20,
-                width: 20,
-              ),
-              const Text(
-                "love. is. caring",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w300,
+      body: Container(
+        color: Color(0xfffaf5f0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ArtikelCard(
+                    imagePath: "assets/images/mentalhealth1.jpg",
+                    width: 600,
+                    height: 150,
+                    titleText: "Depression",
+                    descriptionText:
+                        "A group of conditions associated with the elevation or lowering of a person's mood, such as depression or bipolar disorder.",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtikelDetail(
+                                  disorder: "depression",
+                                  disorderName:
+                                      disorderNameList["depression"]!)));
+                    },
+                    backgroundColor: Colors.white,
+                    shadowColor: const Color(0xffff9684)),
+                ArtikelCard(
+                    imagePath: "assets/images/mentalhealth2.jpg",
+                    width: 600,
+                    height: 150,
+                    titleText: "Schizophrenia",
+                    descriptionText:
+                        "A disorder that affects a person's ability to think, feel and behave clearly.",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtikelDetail(
+                                  disorder: "schizophrenia",
+                                  disorderName:
+                                      disorderNameList["schizophrenia"]!)));
+                    },
+                    backgroundColor: Colors.white,
+                    shadowColor: const Color(0xffaca355)),
+                ArtikelCard(
+                    imagePath: "assets/images/mentalhealth3.jpg",
+                    width: 600,
+                    height: 150,
+                    titleText: "Anxiety Disorder",
+                    descriptionText:
+                        "A mental health disorder characterised by feelings of worry, anxiety or fear that are strong enough to interfere with one's daily activities.",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtikelDetail(
+                                  disorder: "anxiety",
+                                  disorderName: disorderNameList["anxiety"]!)));
+                    },
+                    backgroundColor: Colors.white,
+                    shadowColor: const Color(0xff7f6485)),
+                ArtikelCard(
+                    imagePath: "assets/images/mentalhealth4.jpg",
+                    width: 600,
+                    height: 150,
+                    titleText: "Eating Disorder",
+                    descriptionText:
+                        "A mental disorder defined by abnormal eating behaviors that negatively affect a person's physical or mental health.",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtikelDetail(
+                                  disorder: "eating",
+                                  disorderName: disorderNameList["eating"]!)));
+                    },
+                    backgroundColor: Colors.white,
+                    shadowColor: const Color(0xffffb8d0)),
+                ArtikelCard(
+                    imagePath: "assets/images/mentalhealth5.jpg",
+                    width: 600,
+                    height: 150,
+                    titleText: "Mood Disorder",
+                    descriptionText:
+                        "A mental health class that health professionals use to broadly describe all types of depression and bipolar disorders.",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtikelDetail(
+                                  disorder: "mood",
+                                  disorderName: disorderNameList["mood"]!)));
+                    },
+                    backgroundColor: Colors.white,
+                    shadowColor: const Color(0xffe2bea6)),
+                ArtikelCard(
+                    imagePath: "assets/images/mentalhealth6.jpg",
+                    width: 600,
+                    height: 150,
+                    titleText: "PTSD",
+                    descriptionText:
+                        "A mental health condition that's triggered by a terrifying event — either experiencing it or witnessing it.",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtikelDetail(
+                                  disorder: "ptsd",
+                                  disorderName: disorderNameList["ptsd"]!)));
+                    },
+                    backgroundColor: Colors.white,
+                    shadowColor: const Color(0xff9bb39d)),
+                const SizedBox(height: 15),
+                Image.asset(
+                  "assets/images/logo.png",
+                  height: 20,
+                  width: 20,
                 ),
-              ),
-              const Text(
-                "by Kelompok PBP D-12",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w300,
+                const Text(
+                  "love. is. caring",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 80),
-            ],
+                const Text(
+                  "by Kelompok PBP D-12",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
         ),
       ),
