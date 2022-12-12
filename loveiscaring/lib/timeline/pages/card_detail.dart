@@ -1,16 +1,13 @@
 import 'package:loveiscaring/timeline/function/fetch_timeline.dart';
 import 'package:loveiscaring/timeline/pages/add_card.dart';
-import 'package:loveiscaring/timeline/pages/card_detail.dart';
 import 'package:flutter/material.dart';
 
-class TimelinePage extends StatefulWidget {
-  const TimelinePage({Key? key}) : super(key: key);
+class CardDetail extends StatelessWidget {
+  CardDetail({Key? key, required this.indexx}) : super(key: key);
 
+  final int indexx;
   @override
-  _TimelinePage createState() => _TimelinePage();
-}
 
-class _TimelinePage extends State<TimelinePage> {
   List<int> listColor = [
     0xFFFF9684, 0xFFACA355, 0xFF7F6485,
     0xFFFFB8D0, 0xFFE2BEA6, 0xFF9BB39D
@@ -23,8 +20,8 @@ class _TimelinePage extends State<TimelinePage> {
             color: Colors.black, //change your color here
           ),
           title: const Text(
-              'Timeline',
-              style: TextStyle(color: Colors.black),
+            'Timeline',
+            style: TextStyle(color: Colors.black),
           ),
           backgroundColor: const Color(0xfff9f9f9),
           elevation: 4.0,
@@ -35,22 +32,22 @@ class _TimelinePage extends State<TimelinePage> {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                  return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index)=> Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: GestureDetector(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Transform.translate(
+                return SingleChildScrollView(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 240),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Transform.translate(
                                 offset: const Offset(-4, -4),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color(listColor[(snapshot.data!.length - index - 1)%6]),
+                                        color: Color(listColor[(indexx)%6]),
                                         offset: Offset(6, 4),
                                       ),
                                     ],
@@ -58,12 +55,12 @@ class _TimelinePage extends State<TimelinePage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => CardDetail(indexx: snapshot.data!.length - index - 1)),
+                                        MaterialPageRoute(builder: (context) => const TambahCardPage()),
                                       );
                                     },
                                     child: Card(
                                       shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.zero,
+                                        borderRadius: BorderRadius.zero,
                                         side: BorderSide(
                                           color: Colors.grey,
                                         ),
@@ -72,17 +69,17 @@ class _TimelinePage extends State<TimelinePage> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           ListTile(
-                                            title: Text("${snapshot.data![snapshot.data!.length - index - 1].fields.text}",
+                                            title: Text("${snapshot.data![indexx].fields.text}",
                                                 style: TextStyle(
-                                                    fontSize: 18,
+                                                  fontSize: 18,
                                                 )
                                             ),
-                                            subtitle: Text("${snapshot.data![snapshot.data!.length - index - 1].fields.desc}"),
+                                            subtitle: Text("${snapshot.data![indexx].fields.desc}"),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.end,
                                             children: <Widget>[
-                                              Text("${snapshot.data![snapshot.data!.length - index - 1].fields.username}"),
+                                              Text("${snapshot.data![indexx].fields.username}"),
                                               const SizedBox(width: 8),
                                             ],
                                           ),
@@ -92,23 +89,15 @@ class _TimelinePage extends State<TimelinePage> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      )
-                  );
+                      ),
+                    )
+                );
               }
             }
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const TambahCardPage()),
-            );
-          },
-          backgroundColor: const Color(0xFFCEA16A),
-          child: const Icon(Icons.add),
-        )
     );
   }
 }

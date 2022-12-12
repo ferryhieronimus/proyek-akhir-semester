@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loveiscaring/timeline/pages/timeline.dart';
 import 'package:loveiscaring/timeline/function/add_timeline.dart';
-
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 class TambahCardPage extends StatefulWidget {
   const TambahCardPage({super.key});
@@ -18,6 +19,8 @@ class _TambahCardPageState extends State<TambahCardPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -98,9 +101,12 @@ class _TambahCardPageState extends State<TambahCardPage> {
                       backgroundColor: Color(0xFFCEA16A),
                       padding: const EdgeInsets.all(15.0),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        addCard(_text!, desc!);
+                        final response = await request.post('https://loveiscaring.up.railway.app/timeline/add-card-flutter/', {
+                          'text': _text,
+                          'desc': desc,
+                        });
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => const TimelinePage()),
