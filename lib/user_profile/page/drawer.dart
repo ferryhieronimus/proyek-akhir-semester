@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loveiscaring/main.dart';
-import 'package:loveiscaring/page/user_profile.dart';
-import 'package:loveiscaring/page/showMyNote.dart';
+import 'package:loveiscaring/user_profile/page/user_profile.dart';
+import 'package:loveiscaring/user_profile/page/showMyNote.dart';
 
 Drawer buildDrawer(BuildContext context) {
   return Drawer(
