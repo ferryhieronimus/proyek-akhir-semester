@@ -11,6 +11,8 @@
 ## Tautan Aplikasi
 [![Build status](https://build.appcenter.ms/v0.1/apps/5dcd4ca0-3225-4acf-9e2f-3ad3527ba530/branches/main/badge)](https://appcenter.ms)
 
+[Tautan aplikasi di App Center](https://install.appcenter.ms/orgs/d12-pbp-2022-2023/apps/loveiscaring/distribution_groups/public)
+
 ## Deskripsi aplikasi
 
 ***RECOVER TOGETHER RECOVER STRONGER***
